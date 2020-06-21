@@ -1,0 +1,17 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memo_edit</title>
+</head>
+<body>
+    <form action="/edit_memo" method="post">
+        <input type="hidden" name="user" value="{{ memo["head"]["writer"] }}" /> 
+        <input type="hidden" name="id" value="{{ memo["head"]["id"] }}" /> 
+        <input type="text" placeholder="title" name="title" value="{{ memo["head"]["title"] }}" required>
+        <textarea rows="5" cols="50" name="body" required>{{ memo["body"] }}</textarea>
+        <button type="submit">edit</button>
+    </form>
+    <button onclick="location.href='/memo_list'"> return to list </button>
+</body>
+</html>
