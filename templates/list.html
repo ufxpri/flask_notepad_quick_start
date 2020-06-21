@@ -1,0 +1,25 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+</head>
+<body>
+    {% for memo in memo_list %}
+    <div>
+        <div>
+            <p>{{memo["meta"]["category"]}}</p>
+            <p>{{memo["meta"]["title"]}}</p>
+            <p>{{memo["meta"]["created_time"]}}</p>
+            <p>{{memo["meta"]["favorite"]}}</p>
+        </div>
+        <div>
+            <p>{{memo["content"]}}</p>
+        </div>
+        <!-- view button -->
+        <!-- delete button -->
+    </div>
+    {% endfor %}
+    <!-- create memo button -->
+</body>
+</html>

@@ -1,1 +1,10 @@
-{"head": {"id": "1592411548.8010259", "title": "new memo", "writer": "temp_user", "time": 1592411559.8346415}, "body": "memo is here\r\n"}
+{
+    "meta": {
+        "title": "new memo",
+        "category": "aa",
+        "favorite": true,
+        "created_time": 1592411559.8346415,
+        "last_edit_time": 1592411559.8346415
+    },
+    "content": "memo is here\r\n"
+}
