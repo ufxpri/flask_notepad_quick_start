@@ -4,13 +4,18 @@ import time
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import redirect
+from flask import url_for
 
 memo = Memo()
 app = Flask(__name__)
 
+def memo_list():
+    return " 메모 목록과 프리뷰만 보여주는 UI "
+
 @app.route('/')
-def login():
-    return render_template("login.html")
+def main():
+    return redirect(url_for(get_memo_list))
 
 @app.route('/create_memo', methods=['GET'])
 def create_memo():
