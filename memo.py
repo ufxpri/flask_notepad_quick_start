@@ -14,14 +14,14 @@ import json
 #     "content": "memo is here\r\n"
 # }
 
-memo = dict()
-memo["meta"] = dict()
-memo["meta"]["title"]
-memo["meta"]["category"]
-memo["meta"]["favorite"]
-memo["meta"]["created_time"]
-memo["meta"]["last_edit_time"]
-memo["content"]
+# memo = dict()
+# memo["meta"] = dict()
+# memo["meta"]["title"]
+# memo["meta"]["category"]
+# memo["meta"]["favorite"]
+# memo["meta"]["created_time"]
+# memo["meta"]["last_edit_time"]
+# memo["content"]
 
 
 class MemoManager():
@@ -34,31 +34,34 @@ class MemoManager():
         for memo_path in memo_path_list:
             f = open(memo_path, 'r').read()
             memo_file = json.loads(f)
-
+            memo_id = float(os.path.splitext( os.path.basename(memo_path) )[0])
+            
             memo = dict()
+            memo["id"] = memo_id
             memo["meta"] = dict()
             memo["meta"]["title"] = memo_file["meta"]["title"]
             memo["meta"]["category"] = memo_file["meta"]["category"]
             memo["meta"]["favorite"] = memo_file["meta"]["favorite"]
             memo["meta"]["created_time"] = memo_file["meta"]["created_time"]
             memo["meta"]["last_edit_time"] = memo_file["meta"]["last_edit_time"]
-            memo["content"] = memo["content"]
+            memo["content"] = memo_file["content"]
 
             memo_list.append(memo)
         return memo_list
 
-    def get_memo_content(self, ID):
+    def get_memo_content(self, memo_id):
         try:
-            f = open("./memo/{}.json".format(ID)).read()
+            f = open("./memo/{}.json".format(memo_id)).read()
             memo_file = json.loads(f)
             memo = dict()
+            memo["id"] = memo_id
             memo["meta"] = dict()
             memo["meta"]["title"] = memo_file["meta"]["title"]
             memo["meta"]["category"] = memo_file["meta"]["category"]
             memo["meta"]["favorite"] = memo_file["meta"]["favorite"]
             memo["meta"]["created_time"] = memo_file["meta"]["created_time"]
             memo["meta"]["last_edit_time"] = memo_file["meta"]["last_edit_time"]
-            memo["content"] = memo["content"]
+            memo["content"] = memo_file["content"]
             return memo
         except Exception as identifier:
             print(identifier)
@@ -92,13 +95,14 @@ class MemoManager():
             print(e)
             return False
 
-    def edit_memo(self, ID, memo_object):
+    def edit_memo(self, memo_id, memo_object):
         try:
-            self.delete_memo(ID)
-            file_name = "./memo/{}.json".format(ID)
+            self.delete_memo(memo_id)
+            file_name = "./memo/{}.json".format(memo_id)
             f = open(file_name, 'w')
 
             memo = dict()
+            memo["id"]=memo_id
             memo["meta"] = dict()
             memo["meta"]["title"] = memo_object["meta"]["title"]
             memo["meta"]["category"] = memo_object["meta"]["category"]

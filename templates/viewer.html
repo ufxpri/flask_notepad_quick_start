@@ -5,13 +5,44 @@
     <title>viewer</title>
 </head>
 <body>
-    <p>{{meme["meta"]["favorite"]}}</p>
-    <p>{{meme["meta"]["category"]}}</p>
-    <p>{{meme["meta"]["title"]}}</p>
-    <p>{{meme["content"]}}</p>
-    <p>{{meme["meta"]["last_edit"]}}</p>
-    <p>{{meme["meta"]["created_time"]}}</p>
+    <button onclick="redirect_list()">return</button>
+
+    <p id="id">{{memo["id"]}}</p>
+    <p id="favorite">{{memo["meta"]["favorite"]}}</p>
+    <p id="category">{{memo["meta"]["category"]}}</p>
+    <p id="title">{{memo["meta"]["title"]}}</p>
+    <p id="content">{{memo["content"]}}</p>
+    <p id="last_edit">{{memo["meta"]["last_edit"]}}</p>
+    <p id="created_time">{{memo["meta"]["created_time"]}}</p>
     <!-- edit button -->
+    <button onclick="edit()">edit</button>
     <!-- delete button -->
+    <button onclick="delete_()">delete</button>
+
+    <script>
+        function redirect_list(){
+            window.location.href='/list';
+        }
+        function edit(){
+            id = document.getElementById("id").innerHTML;
+            title = document.getElementById("title").innerHTML;
+            category = document.getElementById("category").innerHTML;
+            favorite = document.getElementById("favorite").innerHTML;
+            content = document.getElementById("content").innerHTML;
+            last_edit = document.getElementById("last_edit").innerHTML;
+            created_time = document.getElementById("created_time").innerHTML;
+            edit_memo(id, title, category, favorite, last_edit, created_time, content);
+        }
+        function delete_(){
+            id = document.getElementById("id").innerHTML;
+            delete_memo(id);
+        }
+    </script>
 </body>
 </html>
+
+{% block javascript %}
+    <script type="text/javascript">
+        {% include "memo.js" %}
+    </script>
+{% endblock %}

@@ -17,9 +17,27 @@
             <p>{{memo["content"]}}</p>
         </div>
         <!-- view button -->
+        <button onclick="redirect_viewer({{memo['id']}})">view</button>
         <!-- delete button -->
+        <button onclick="delete_memo({{memo['id']}})">delete</button>
     </div>
     {% endfor %}
     <!-- create memo button -->
+    <button onclick="redirect_create()">create</button>
+    <script>
+        function redirect_viewer(id){
+            window.location.href='/viewer?id='+id;
+        }
+        function redirect_create(){
+            window.location.href='/create';
+        }
+    </script>
 </body>
 </html>
+
+{% block javascript %}
+    <script type="text/javascript">
+        {% include "memo.js" %}
+    </script>
+    <!-- The contents of myscript.js will be loaded inside the script tag -->
+{% endblock %}

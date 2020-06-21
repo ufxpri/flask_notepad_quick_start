@@ -1,0 +1,38 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cerate</title>
+</head>
+<body>
+    <button onclick="redirect_list()">return</button>
+
+    <p id="favorite">memo["meta"]["favorite"]</p>
+    <p id="category">memo["meta"]["category"]</p>
+    <p id="title">memo["meta"]["title"]</p>
+    <p id="content">memo["content"]</p>
+    <p id="last_edit">memo["meta"]["last_edit"]</p>
+    <p id="created_time">memo["meta"]["created_time"]</p>
+    <!-- edit button -->
+    <button onclick="create()">create</button>
+
+    <script>
+        function redirect_list(){
+            window.location.href='/list';
+        }
+        function create(){
+            title = document.getElementById("title").innerHTML;
+            category = document.getElementById("category").innerHTML;
+            favorite = document.getElementById("favorite").innerHTML;
+            content = document.getElementById("content").innerHTML;
+            new_memo(title, category, favorite, content);
+        }
+    </script>
+</body>
+</html>
+
+{% block javascript %}
+    <script type="text/javascript">
+        {% include "memo.js" %}
+    </script>
+{% endblock %}
