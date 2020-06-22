@@ -1,43 +1,44 @@
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>list</title>
+    <link rel='stylesheet' type='text/css'
+        href={{ url_for('static', filename='bootstrap-4.5.0-dist/css/bootstrap.min.css') }} />
 </head>
-<body>
-    {% for memo in memo_list %}
-    <div>
-        <div>
-            <p>{{memo["meta"]["category"]}}</p>
-            <p>{{memo["meta"]["title"]}}</p>
-            <p>{{memo["meta"]["created_time"]}}</p>
-            <p>{{memo["meta"]["favorite"]}}</p>
-        </div>
-        <div>
-            <p>{{memo["content"]}}</p>
-        </div>
-        <!-- view button -->
-        <button onclick="redirect_viewer({{memo['id']}})">view</button>
-        <!-- delete button -->
-        <button onclick="delete_memo({{memo['id']}})">delete</button>
-    </div>
-    {% endfor %}
-    <!-- create memo button -->
-    <button onclick="redirect_create()">create</button>
-    <script>
-        function redirect_viewer(id){
-            window.location.href='/viewer?id='+id;
-        }
-        function redirect_create(){
-            window.location.href='/create';
-        }
-    </script>
-</body>
-</html>
 
-{% block javascript %}
-    <script type="text/javascript">
-        {% include "memo.js" %}
+<body>
+    <div class="card-columns">
+        {% for memo in memo_list %}
+        <div class="card">
+            <!-- <img src="..." class="card-img-top" alt="..."> -->
+            <div class="card-body">
+                <p class="card-text">{{memo["meta"]["favorite"]}}</p>
+                <p class="card-text"><small class="text-muted">{{memo["meta"]["category"]}}</small></p>
+                <h5 class="card-title">{{memo["meta"]["title"]}}</h5>
+                <p class="card-text">{{memo["content"]}}</p>
+                <p class="card-text"><small class="text-muted">{{memo["meta"]["created_time"]}}</small></p>
+                <!-- view button -->
+                <button type="button" class="btn btn-light" onclick="redirect_viewer({{memo['id']}})">view</button>
+                <!-- delete button -->
+                <button type="button" class="btn btn-danger" onclick="delete_memo({{memo['id']}})">delete</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- create memo button -->
+    <button type="button" class="btn btn-primary" onclick="redirect_create()">create</button>
+    <script>
+        function redirect_viewer(id) {
+            window.location.href = '/viewer?id=' + id;
+        }
+        function redirect_create() {
+            window.location.href = '/create';
+        }
     </script>
-    <!-- The contents of myscript.js will be loaded inside the script tag -->
-{% endblock %}
+    <script src={{ url_for('static', filename='memo.js') }}></script>
+</body>
+
+</html>

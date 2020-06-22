@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cerate</title>
+    <link rel='stylesheet' type='text/css' href={{ url_for('static', filename='bootstrap-4.5.0-dist/css/bootstrap.min.css') }} />
 </head>
 <body>
     <button onclick="redirect_list()">return</button>
@@ -28,11 +29,6 @@
             new_memo(title, category, favorite, content);
         }
     </script>
+    <script src={{ url_for('static', filename='memo.js') }}></script>
 </body>
 </html>
-
-{% block javascript %}
-    <script type="text/javascript">
-        {% include "memo.js" %}
-    </script>
-{% endblock %}
