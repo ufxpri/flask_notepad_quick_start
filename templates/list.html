@@ -9,36 +9,45 @@
 </head>
 
 <body>
-    <div class="card-columns">
-        {% for memo in memo_list %}
-        <div class="card">
-            <!-- <img src="..." class="card-img-top" alt="..."> -->
-            <div class="card-body">
-                <p class="card-text">{{memo["meta"]["favorite"]}}</p>
-                <p class="card-text"><small class="text-muted">{{memo["meta"]["category"]}}</small></p>
-                <h5 class="card-title">{{memo["meta"]["title"]}}</h5>
-                <p class="card-text">{{memo["content"]}}</p>
-                <p class="card-text"><small class="text-muted">{{memo["meta"]["created_time"]}}</small></p>
-                <!-- view button -->
-                <button type="button" class="btn btn-light" onclick="redirect_viewer({{memo['id']}})">view</button>
-                <!-- delete button -->
-                <button type="button" class="btn btn-danger" onclick="delete_memo({{memo['id']}})">delete</button>
+    <div class="container">
+        <div class="card-columns">
+            {% for memo in memo_list %}
+            <div class="card">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <p class="card-text"><small class="text-muted">{{memo["meta"]["category"]}}</small></p>
+                    <h5 class="card-title">{{memo["meta"]["title"]}}</h5>
+                    <svg height="20" width="20">
+                        {% if memo["meta"]["favorite"]==true %}
+                        <polygon points="10,1 4,19 19,7 1,7 16,19" style="fill:yellow;fill-rule:nonzero;"/>
+                        {% else %}
+                        <polygon points="10,1 4,19 19,7 1,7 16,19" style="fill:lightgray;fill-rule:nonzero;"/>
+                        {% endif %}
+                    </svg>
+                    <hr>
+                    <p class="card-text">{{memo["content"]}}</p>
+                    <p class="card-text"><small class="text-muted">{{memo["meta"]["last_edit_time"]}}</small></p>
+                    <!-- view button -->
+                    <button type="button" class="btn btn-light" onclick="redirect_viewer({{memo['id']}})">view</button>
+                    <!-- delete button -->
+                    <button type="button" class="btn btn-danger" onclick="delete_memo({{memo['id']}})">delete</button>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
 
-    <!-- create memo button -->
-    <button type="button" class="btn btn-primary" onclick="redirect_create()">create</button>
-    <script>
-        function redirect_viewer(id) {
-            window.location.href = '/viewer?id=' + id;
-        }
-        function redirect_create() {
-            window.location.href = '/create';
-        }
-    </script>
-    <script src={{ url_for('static', filename='memo.js') }}></script>
-</body>
+        <!-- create memo button -->
+        <button type="button" class="btn btn-primary" onclick="redirect_create()">create</button>
+        <script>
+            function redirect_viewer(id) {
+                window.location.href = '/viewer?id=' + id;
+            }
+            function redirect_create() {
+                window.location.href = '/create';
+            }
+        </script>
+        <script src={{ url_for('static', filename='memo.js') }}></script>
+    </div>
+    </body>
 
 </html>

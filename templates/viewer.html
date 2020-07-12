@@ -9,48 +9,58 @@
 </head>
 
 <body>
-    <button type="button" class="btn btn-light" onclick="redirect_list()">return</button>
+    <div class="container">
+        <button type="button" class="btn btn-light" onclick="redirect_list()">return</button>
 
-    <small>id: </small><small class="text-muted" id="id">{{memo["id"]}}</small>
-    <form>
-        <div class="form-group">
-            <label for="title">title</label>
-            <input type="text" class="form-control" id="title" placeholder="title" value={{memo["meta"]["title"]}}>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="favorite" value="favorite"> {{memo["meta"]["favorite"]}}
-            <label class="form-check-label" for="favorite">1</label>
-        </div>
-        <div class="form-group">
-            <label for="category">category</label>
-            <select class="form-control" id="category">
-                <option value="first">{{memo["meta"]["category"]}}</option>
-                <option value="second">1</option>
-                <option value="third">2</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="content">Content textarea</label>
-            <textarea class="form-control" id="content" rows="10">{{memo["content"]}}</textarea>
-        </div>
-    </form>
+        <small>id: </small><small class="text-muted" id="id">{{memo["id"]}}</small>
+        <form>
+            <div class="form-group">
+                <label for="title">title</label>
+                <input type="text" class="form-control" id="title" placeholder="title" value={{memo["meta"]["title"]}}>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="favorite" value="favorite" {% if memo["meta"]["favorite"]==true %} checked {% endif %}>
+                <label class="form-check-label" for="favorite">
+                    <svg height="20" width="20">
+                        {% if memo["meta"]["favorite"]==true %}
+                        <polygon points="10,1 4,19 19,7 1,7 16,19" style="fill:yellow;fill-rule:nonzero;"/>
+                        {% else %}
+                        <polygon points="10,1 4,19 19,7 1,7 16,19" style="fill:lightgray;fill-rule:nonzero;"/>
+                        {% endif %}
+                    </svg></label>
+            </div>
+            <div class="form-group">
+                <label for="category">category</label>    
+                <select class="form-control" id="category">
+                    {% for category in category_list %}
+                    <option value={{category}} {% if memo["meta"]["category"]==category %} selected="selected"{% endif %}>{{category}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="content">Content textarea</label>
+                <textarea class="form-control" id="content" rows="10">{{memo["content"]}}</textarea>
+            </div>
+        </form>
 
-    <!-- <p id="favorite">{{memo["meta"]["favorite"]}}</p> -->
-    <!-- <p id="category">{{memo["meta"]["category"]}}</p> -->
-    <!-- <p id="title">{{memo["meta"]["title"]}}</p> -->
-    <!-- <p id="content">{{memo["content"]}}</p> -->
-    <small>last edit time: </small><small class="text-muted" id="last_edit">{{memo["meta"]["created_time"]}}</small>
-    <small>created time: </small><small class="text-muted" id="created_time">{{memo["meta"]["created_time"]}}</small>
-    <!-- edit button -->
-    <button type="button" class="btn btn-light" onclick="edit()">edit</button>
-    <!-- delete button -->
-    <button type="button" class="btn btn-danger" onclick="delete_()">delete</button>
+        <!-- <p id="favorite">{{memo["meta"]["favorite"]}}</p> -->
+        <!-- <p id="category">{{memo["meta"]["category"]}}</p> -->
+        <!-- <p id="title">{{memo["meta"]["title"]}}</p> -->
+        <!-- <p id="content">{{memo["content"]}}</p> -->
+        <small>last edit time: </small><small class="text-muted" id="last_edit">{{memo["meta"]["last_edit_time"]}}</small>
+        <small>created time: </small><small class="text-muted" id="created_time">{{memo["meta"]["created_time"]}}</small>
+        <!-- save button -->
+        <button type="button" class="btn btn-light" onclick="save()">save</button>
+        <!-- delete button -->
+        <button type="button" class="btn btn-danger" onclick="delete_()">delete</button>
+    </div>
+
 
     <script>
         function redirect_list() {
             window.location.href = '/list';
         }
-        function edit() {
+        function save() {
             id = document.getElementById("id").innerHTML;
             title = document.getElementById("title").value;
             var e = document.getElementById("category");
@@ -60,6 +70,7 @@
             last_edit = document.getElementById("last_edit").innerHTML;
             created_time = document.getElementById("created_time").innerHTML;
             edit_memo(id, title, category, favorite, last_edit, created_time, content);
+            redirect_list();
         }
         function delete_() {
             id = document.getElementById("id").innerHTML;

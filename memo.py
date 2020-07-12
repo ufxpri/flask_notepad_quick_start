@@ -77,9 +77,6 @@ class MemoManager():
 
     def create_memo(self, ID, memo_object):
         try:
-            file_name = "./memo/{}.json".format(ID)
-            f = open(file_name, 'w')
-
             memo = dict()
             memo["meta"] = dict()
             memo["meta"]["title"] = memo_object["meta"]["title"]
@@ -89,6 +86,8 @@ class MemoManager():
             memo["meta"]["last_edit_time"] = time.time()
             memo["content"] = memo_object["content"]
             
+            file_name = "./memo/{}.json".format(ID)
+            f = open(file_name, 'w')
             f.write(json.dumps(memo))
             return True
         except Exception as e:
@@ -97,21 +96,17 @@ class MemoManager():
 
     def edit_memo(self, memo_id, memo_object):
         try:
-            self.delete_memo(memo_id)
-            file_name = "./memo/{}.json".format(memo_id)
-            f = open(file_name, 'w')
-
-            memo = dict()
+            memo = self.get_memo_content(memo_id)
             memo["id"]=memo_id
-            memo["meta"] = dict()
             memo["meta"]["title"] = memo_object["meta"]["title"]
             memo["meta"]["category"] = memo_object["meta"]["category"]
             memo["meta"]["favorite"] = memo_object["meta"]["favorite"]
-            memo["meta"]["created_time"] = memo_object["meta"]["created_time"]
             memo["meta"]["last_edit_time"] = time.time()
             memo["content"] = memo_object["content"]
-            
-            f.write(json.dumps(memo))
+            self.delete_memo(memo_id)
+            file_name = "./memo/{}.json".format(memo_id)
+            with open(file_name, 'w') as f:
+                f.write(json.dumps(memo))
             return True
         except Exception as identifier:
             print(identifier)
