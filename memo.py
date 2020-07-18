@@ -88,7 +88,7 @@ class MemoManager():
             
             file_name = "./memo/{}.json".format(ID)
             f = open(file_name, 'w')
-            f.write(json.dumps(memo))
+            f.write(json.dumps(memo, indent=4))
             return True
         except Exception as e:
             print(e)
@@ -106,7 +106,7 @@ class MemoManager():
             self.delete_memo(memo_id)
             file_name = "./memo/{}.json".format(memo_id)
             with open(file_name, 'w') as f:
-                f.write(json.dumps(memo))
+                f.write(json.dumps(memo, indent=4))
             return True
         except Exception as identifier:
             print(identifier)
